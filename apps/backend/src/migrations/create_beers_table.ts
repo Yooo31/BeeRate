@@ -1,4 +1,4 @@
-import { initDB } from '../db';
+import { initDB } from "../db";
 
 const createTable = async () => {
   const db = await initDB();
@@ -15,5 +15,5 @@ const createTable = async () => {
 };
 
 createTable().catch((err) => {
-  console.error('Error creating table:', err);
+  console.error("Error creating table:", err);
 });
