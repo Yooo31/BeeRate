@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { fetchBeers, updateBeer, deleteBeer } from '@/lib/api';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import toast from 'react-hot-toast';
 
 export default function BeerDetails({ params }: { params: { id: string } }) {
   const [beer, setBeer] = useState({ name: '', alcohol: '', price: '', rating: '' });
@@ -32,11 +33,13 @@ export default function BeerDetails({ params }: { params: { id: string } }) {
       price: parseFloat(beer.price),
       rating: parseFloat(beer.rating),
     });
+    toast.success('Bière modifiée !');
     router.push('/');
   };
 
   const handleDelete = async () => {
     await deleteBeer(params.id);
+    toast.success('Bière supprimée !');
     router.push('/');
   };
 

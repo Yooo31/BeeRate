@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from 'next/link';
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,7 +30,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/add">Add Beer</Link>
           </nav>
         </header>
-        <main className="p-8">{children}</main>
+        <main className="p-8">
+          {children}
+          <Toaster
+            position="bottom-right"
+            reverseOrder={false}
+          />
+        </main>
       </body>
     </html>
   );
