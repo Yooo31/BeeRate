@@ -31,10 +31,3 @@ jobs:
 
       - name: Run Code Coverage
         run: pnpm test -- --coverage
-
-      - name: Send Discord notification
-        uses: Ilshidur/action-discord@v2
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
-            ✅ Feature branch CI passed for branch `${{ github.ref_name }}`
