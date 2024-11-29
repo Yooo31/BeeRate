@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { initDB } from './db';
 import {
   getAllBeers,
   getBeerById,

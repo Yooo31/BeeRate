@@ -1,31 +1,37 @@
 import { Request, Response } from 'express';
 import { initDB } from '../db';
+import { Beer } from '../types/beer';
+
+export type BeerInput = Omit<Beer, 'id'>;
 
 export const getAllBeers = async (
   req: Request,
   res: Response
-): Promise<any> => {
+): Promise<void> => {
   const db = await initDB();
-  const beers = await db.all('SELECT * FROM beers');
+  const beers: Beer[] = await db.all('SELECT * FROM beers');
   res.json(beers);
 };
 
 export const getBeerById = async (
   req: Request<{ id: string }>,
   res: Response
-): Promise<any> => {
+): Promise<void> => {
   const db = await initDB();
-  const beer = await db.get('SELECT * FROM beers WHERE id = ?', req.params.id);
+  const beer: Beer[] = await db.get(
+    'SELECT * FROM beers WHERE id = ?',
+    req.params.id
+  );
   if (!beer) {
     return res.status(404).json({ error: 'Beer not found' });
   }
   res.json(beer);
 };
 
-export const addBeer = async (req: Request, res: Response): Promise<any> => {
+export const addBeer = async (req: Request, res: Response): Promise<void> => {
   const { name, alcohol, price, rating } = req.body;
   const db = await initDB();
-  const result = await db.run(
+  const result: Beer[] = await db.run(
     'INSERT INTO beers (name, alcohol, price, rating) VALUES (?, ?, ?, ?)',
     [name, alcohol, price, rating]
   );
@@ -35,10 +41,10 @@ export const addBeer = async (req: Request, res: Response): Promise<any> => {
 export const updateBeer = async (
   req: Request<{ id: string }>,
   res: Response
-): Promise<any> => {
+): Promise<void> => {
   const { name, alcohol, price, rating } = req.body;
   const db = await initDB();
-  const result = await db.run(
+  const result: Beer[] = await db.run(
     'UPDATE beers SET name = ?, alcohol = ?, price = ?, rating = ? WHERE id = ?',
     [name, alcohol, price, rating, req.params.id]
   );
@@ -48,8 +54,11 @@ export const updateBeer = async (
 export const deleteBeer = async (
   req: Request<{ id: string }>,
   res: Response
-): Promise<any> => {
+): Promise<void> => {
   const db = await initDB();
-  const result = await db.run('DELETE FROM beers WHERE id = ?', req.params.id);
+  const result: Beer[] = await db.run(
+    'DELETE FROM beers WHERE id = ?',
+    req.params.id
+  );
   res.json({ deleted: result.changes });
 };
