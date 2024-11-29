@@ -3,7 +3,7 @@ name: Feat CI
 on:
   push:
     branches:
-      - "feat/**"
+      - 'feat/**'
 
 jobs:
   test:

@@ -62,9 +62,6 @@ export const deleteBeer = async (
   res: Response
 ): Promise<void> => {
   const db = await initDB();
-  const result = await db.run(
-    'DELETE FROM beers WHERE id = ?',
-    req.params.id
-  );
+  const result = await db.run('DELETE FROM beers WHERE id = ?', req.params.id);
   res.json({ deleted: result.changes });
 };

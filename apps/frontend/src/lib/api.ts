@@ -1,3 +1,4 @@
+import { Beer } from '@/types/beer';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:4000';
@@ -7,7 +8,7 @@ export const fetchBeers = async () => {
   return response.data;
 };
 
-export const addBeer = async (beer: any) => {
+export const addBeer = async (beer: Beer) => {
   const response = await axios.post(`${API_URL}/beers`, beer);
   return response.data;
 };
@@ -17,7 +18,7 @@ export const deleteBeer = async (id: string) => {
   return response.data;
 };
 
-export const updateBeer = async (id: string, beer: any) => {
+export const updateBeer = async (id: string, beer: Beer) => {
   const response = await axios.put(`${API_URL}/beers/${id}`, beer);
   return response.data;
 };
