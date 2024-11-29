@@ -1,0 +1,40 @@
+name: Feature Branch CI
+
+on:
+  push:
+    branches:
+      - "feat/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run ESLint
+        run: pnpm eslint .
+
+      - name: Run Prettier
+        run: pnpm prettier --check .
+
+      - name: Run Tests
+        run: pnpm test
+
+      - name: Run Code Coverage
+        run: pnpm test -- --coverage
+
+      - name: Send Discord notification
+        uses: Ilshidur/action-discord@v2
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            ✅ Feature branch CI passed for branch `${{ github.ref_name }}`
