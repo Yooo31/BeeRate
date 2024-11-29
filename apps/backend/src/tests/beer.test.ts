@@ -54,4 +54,22 @@ describe('Beer API', () => {
     expect(getResponse.body).toHaveLength(1);
     expect(getResponse.body[0]).toMatchObject(newBeer);
   });
+
+  it('should delete a beer', async () => {
+    const newBeer = {
+      name: 'Stout Supreme',
+      alcohol: 8.0,
+      price: 6,
+      rating: 4.8,
+    };
+
+    const addResponse = await request(app).post('/beers').send(newBeer);
+    const beerId = addResponse.body.id;
+
+    const deleteResponse = await request(app).delete(`/beers/${beerId}`);
+    expect(deleteResponse.status).toBe(200);
+
+    const getResponse = await request(app).get('/beers');
+    expect(getResponse.body).toHaveLength(0);
+  });
 });
