@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "feat/**"
-      - "develop"
 
 jobs:
   test:
